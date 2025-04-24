@@ -20,7 +20,7 @@ A Telegram bot for tracking and monitoring Cardano blockchain wallets. This bot 
 Features
 1. Real-time Transaction Monitoring: Get instant notifications when tracked wallets receive new transactions
 2. Wallet Balance Checking: View ADA balance with USD conversion
-3. Token Holdings: Display all native tokens in a wallet with proper formatting
-4. Multi-wallet Tracking: Monitor multiple wallets simultaneously
+3. Token Holdings: Display all native tokens in a wallet 
+4. Multi-wallet Tracking: Monitor multiple wallets 
 
 
