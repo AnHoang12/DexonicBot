@@ -1,7 +1,9 @@
 ## DexonicBot
 We introduce two Telegram bots:
 
-I. A trading signal bot that analyzes cryptocurrency markets, detects technical patterns, and sends alerts through Telegram. 
+I. A trading signal bot
+
+Bot can analyze cryptocurrency markets, detect technical patterns, and send alerts through Telegram. 
 The system calculates win rates for different time frames and provides detailed market analysis.
 
 Features
@@ -12,6 +14,7 @@ Features
 5. Provides real-time market updates on an hourly basis
 
 II. Cardano Wallet Tracker Bot
+
 A Telegram bot for tracking and monitoring Cardano blockchain wallets. This bot provides real-time transaction notifications and wallet information directly to your Telegram account.
 
 Features
