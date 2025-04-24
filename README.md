@@ -13,8 +13,8 @@ Provides real-time market updates on an hourly basis
 2. Cardano Wallet Tracker Bot
 A Telegram bot for tracking and monitoring Cardano blockchain wallets. This bot provides real-time transaction notifications and wallet information directly to your Telegram account.
 
-Features
-Real-time Transaction Monitoring: Get instant notifications when tracked wallets receive new transactions
+*Features
+*Real-time Transaction Monitoring: Get instant notifications when tracked wallets receive new transactions
 Wallet Balance Checking: View ADA balance with USD conversion
 Token Holdings: Display all native tokens in a wallet with proper formatting
 NFT Gallery: List NFT collections owned by an address
@@ -23,8 +23,8 @@ Custom Labels: Assign friendly names to tracked addresses
 
 #Prerequisites
 
-Python 3.7+
-MySQL database with market data
-Telegram Bot Token
-OpenAI API Key
+*Python 3.7+
+*MySQL database with market data
+*Telegram Bot Token
+*OpenAI API Key
 
