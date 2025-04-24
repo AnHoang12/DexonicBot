@@ -1,5 +1,6 @@
 ## DexonicBot
-We introduce two Telegram bots:\n 
+We introduce two Telegram bots:
+
 I. A trading signal bot that analyzes cryptocurrency markets, detects technical patterns, and sends alerts through Telegram. 
 The system calculates win rates for different time frames and provides detailed market analysis.
 
