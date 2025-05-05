@@ -3,7 +3,7 @@ import pandas as pd
 import asyncio
 from telegram.ext import Application
 from dotenv import load_dotenv
-from tradebot_v5 import TradeBot  
+from tradebot import TradeBot  
 from datetime import datetime
 from sqlalchemy import create_engine
 from openai import OpenAI
