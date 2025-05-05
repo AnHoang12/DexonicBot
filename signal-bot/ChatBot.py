@@ -20,9 +20,13 @@ DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB
 engine = create_engine(DATABASE_URL)
 
 # Load supported coins
-with open("supported_coins.json", "r") as file:
-    data = json.load(file)
-    support_coins = set(data['supported_coins'])  
+# with open("supported_coins.json", "r") as file:
+#     data = json.load(file)
+#     support_coins = set(data['supported_coins']) 
+
+support_coins = [
+     "ETHUSDT",  "BTCUSDT", "ADAUSDT"
+    ] 
 
 class ChatBot:
     def __init__(self, api_key, client):
@@ -37,12 +41,14 @@ class ChatBot:
                 {
                     "role": "system",
                     "content": """ 
-                        You are an AI assistant for Vistia, a platform that delivers real-time AI-powered signals about the cryptocurrency market.
-                        When a user asks a question unrelated to trading or the crypto market, respond politely to their inquiry while kindly reminding them that the topic isn't connected to trading or crypto.
+                        You are an AI assistant, a platform that delivers real-time AI-powered signals about the cryptocurrency market.
+                        When a user asks a question unrelated to trading or the crypto market specializing in Cardano (ADA) cryptocurrency, respond politely to their inquiry while kindly reminding them that the topic isn't connected to trading or crypto.
                         Always maintain a helpful and courteous tone.
-
-                        If the user's query give details information about a specific coin, you should give only the information below: 
-                            - symbol
+                        Categorize the user's query into one of these types:
+                        1. 'symbol' - If the user's query give details information about a specific coin
+                        2. 'info' - If they are asking about Cardano technology, ecosystem, updates, or general information
+                        3. 'other' - If the query is unrelated to Cardano or cryptocurrency
+                        
 
                         Below are examples of question answers 
                             "What is the price of bitcoin?", you should answer "BTC" not "BTC." or "BTC is $50,000".
@@ -106,7 +112,7 @@ class ChatBot:
             return "I couldn't retrieve market data at this time."
 
         sys_prompt = f""" 
-            You are an AI providing technical analysis on cryptocurrency. 
+            You are an AI assistant providing technical analysis on cryptocurrency. 
             Provide an analysis of the current market situation for {coins_str}. Include short-term trends, and key technical indicators.
             Is the symbol currently in a buying range, or should the user wait for a better entry point? Please provide an analysis based on the technical indicators provided, such as moving averages, RSI, and support/resistance levels.
             You should answer me in raw text format. The markdown format is not allowed.
@@ -125,5 +131,3 @@ class ChatBot:
         )
 
         return completion.choices[0].message.content.strip()
-
-

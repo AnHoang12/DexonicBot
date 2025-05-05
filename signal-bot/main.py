@@ -3,7 +3,7 @@ import pandas as pd
 import asyncio
 from telegram.ext import Application
 from dotenv import load_dotenv
-from tradebot import TradeBot  
+from tradebot_v5 import TradeBot  
 from datetime import datetime
 from sqlalchemy import create_engine
 from openai import OpenAI
@@ -120,7 +120,7 @@ async def check_signals(context):
 async def start(update: Update, context: CallbackContext):
     """Send a message when the command /start is issued."""
     welcome_message = """
-Welcome to VistiaBot! 👋
+Welcome to DexonicBot! 👋
 
 I can help you with:
 - Real-time crypto market analysis

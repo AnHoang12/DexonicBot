@@ -270,7 +270,7 @@ class TradeBot:
                 f"Close Price: ${candle['close']}\n"
                 f"Entry Price: ${candle['close']}\n"
                 f"Time: {datetime.fromtimestamp(candle['open_time'])}\n"
-                "Swap here: [Minswap](https://minswap.org)"
+                "Swap here: [Minswap](https://minswap.org)\n"
                 "***"
             )
 
