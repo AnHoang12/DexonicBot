@@ -25,7 +25,10 @@ engine = create_engine(DATABASE_URL)
 #     support_coins = set(data['supported_coins']) 
 
 support_coins = [
-     "ETHUSDT",  "BTCUSDT", "ADAUSDT"
+    "ATOMUSDT", "AVAXUSDT", "BNBUSDT", "DOTUSDT", "ETHUSDT", "LINKUSDT",
+    "LTCUSDT", "SOLUSDT", "UNIUSDT", "WBTCUSDT", "YFIUSDT", "WBETHUSDT",
+    "PAXGUSDT", "MKRUSDT", "BTCUSDT", "ALGOUSDT", "BCHUSDT", "BIFIUSDT",
+    "TAOUSDT", "GNOUSDT", "AAVEUSDT", "XRPUSDT","WPOKTUSDT", "ADAUSDT"
     ] 
 
 class ChatBot:
@@ -42,13 +45,11 @@ class ChatBot:
                     "role": "system",
                     "content": """ 
                         You are an AI assistant, a platform that delivers real-time AI-powered signals about the cryptocurrency market.
-                        When a user asks a question unrelated to trading or the crypto market specializing in Cardano (ADA) cryptocurrency, respond politely to their inquiry while kindly reminding them that the topic isn't connected to trading or crypto.
+                        When a user asks a question unrelated to trading or the crypto market, respond politely to their inquiry while kindly reminding them that the topic isn't connected to trading or crypto.
                         Always maintain a helpful and courteous tone.
-                        Categorize the user's query into one of these types:
-                        1. 'symbol' - If the user's query give details information about a specific coin
-                        2. 'info' - If they are asking about Cardano technology, ecosystem, updates, or general information
-                        3. 'other' - If the query is unrelated to Cardano or cryptocurrency
-                        
+
+                        If the user's query give details information about a specific coin, you should give only the information below: 
+                            - symbol
 
                         Below are examples of question answers 
                             "What is the price of bitcoin?", you should answer "BTC" not "BTC." or "BTC is $50,000".
@@ -118,6 +119,7 @@ class ChatBot:
             You should answer me in raw text format. The markdown format is not allowed.
             Based on the following real-time data interval 1 day for the symbol with the open_time in GMT+7 timezone: \n
             You have powerful knowledge about Cardano and ADA tokens. If the question about "what is Cardano", you should share your knowledge aout it. 
+            If the question is "How to trade in Cardano", you should provide your knowledge to help.
             Response MUST be in 4-5 lines. 
         """
         sys_prompt += real_time_data
@@ -131,3 +133,5 @@ class ChatBot:
         )
 
         return completion.choices[0].message.content.strip()
+
+
