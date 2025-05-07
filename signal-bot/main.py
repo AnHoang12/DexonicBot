@@ -52,7 +52,7 @@ LIMIT 10;
 """
 
 def calculate_historical_win_rates():
-    """Calculate historical win rates synchronously"""
+
     try:
         print("Calculating historical win rates...")
         df = pd.read_sql(HISTORICAL_QUERY, engine)
@@ -88,7 +88,7 @@ def calculate_historical_win_rates():
         print(f"Error calculating historical win rates: {e}")
 
 async def check_signals(context):
-    """Check for trading signals in the data"""
+
     try:
         calculate_historical_win_rates()
         
@@ -135,7 +135,7 @@ Try asking me about a specific coin like:
     await update.message.reply_text(welcome_message)
 
 async def handle_message(update: Update, context: CallbackContext):
-    """Process user messages and generate responses."""
+  
     user_message = update.message.text
     user_id = update.effective_user.id
     
@@ -147,7 +147,7 @@ async def handle_message(update: Update, context: CallbackContext):
         await update.message.reply_text(response)
 
 def main():
-    """Main function to start the bot"""
+    
     
     # Create the application
     application = Application.builder().token(TOKEN).build()

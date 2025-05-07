@@ -19,16 +19,9 @@ DB_NAME = os.getenv("DB_NAME")
 DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 engine = create_engine(DATABASE_URL)
 
-# Load supported coins
-# with open("supported_coins.json", "r") as file:
-#     data = json.load(file)
-#     support_coins = set(data['supported_coins']) 
 
 support_coins = [
-    "ATOMUSDT", "AVAXUSDT", "BNBUSDT", "DOTUSDT", "ETHUSDT", "LINKUSDT",
-    "LTCUSDT", "SOLUSDT", "UNIUSDT", "WBTCUSDT", "YFIUSDT", "WBETHUSDT",
-    "PAXGUSDT", "MKRUSDT", "BTCUSDT", "ALGOUSDT", "BCHUSDT", "BIFIUSDT",
-    "TAOUSDT", "GNOUSDT", "AAVEUSDT", "XRPUSDT","WPOKTUSDT", "ADAUSDT"
+     "ADAUSDT"
     ] 
 
 class ChatBot:
@@ -37,7 +30,7 @@ class ChatBot:
         self.client = client
 
     def classify_user_intent(self, user_query):
-        """ Xác định ý định của người dùng """
+
         completion = self.client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
@@ -69,7 +62,6 @@ class ChatBot:
         return completion.choices[0].message.content.strip()
 
     def fetch_real_time_data(self, db: Session, coins_list):
-        """ Lấy dữ liệu 14 phiên gần nhất của coin từ database """
         table = "proddb.f_coin_signal_1h"
         real_time_data = ""
 
@@ -86,7 +78,7 @@ class ChatBot:
         return real_time_data
 
     def generate_detailed_response(self, user_query, db: Session):
-        """ Phân tích kỹ thuật và đưa ra phản hồi """
+
         classification = self.classify_user_intent(user_query)
 
         if len(classification) > 15:  
