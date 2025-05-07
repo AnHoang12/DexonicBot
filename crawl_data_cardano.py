@@ -26,17 +26,14 @@ DB_PORT = os.getenv("DB_PORT")
 DB_NAME = os.getenv("DB_NAME")
 DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-# API Configuration
-BLOCKFROST_API_KEY = "mainnet7DhJrjV9S7SH9FllpKANoAFvnD1EQoMX"  # Replace with your actual API key
+BLOCKFROST_API_KEY = "mainnet7DhJrjV9S7SH9FllpKANoAFvnD1EQoMX" 
 BLOCKFROST_BASE_URL = "https://cardano-mainnet.blockfrost.io/api/v0"
 MINSWAP_POOL_ADDRESS = "addr1z8snz7c4974vzdpxu65ruphl3zjdvtxw8strf2c2tmqnxz2j2c79gy9l76sdg0xwhd7r0c0kna0tycz4y5s6mlenh8pq0xmsha"  # Minswap router address
 PRICE_API_URL = "https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd"
 MAX_RETRIES = 3
 RETRY_DELAY = 2  # seconds
 
-# Token registry for common tokens
 TOKEN_REGISTRY = {
-    # Token Policy ID + Asset Name (hex) -> (Symbol, Decimals)
     
     # Cardano Native Tokens
     "lovelace": ("ADA", 6),
@@ -70,13 +67,11 @@ TOKEN_REGISTRY = {
 
 STABLECOINS = ["USDT", "USDC", "iUSD", "USDW", "USDA", "DJED"]
 
-# Initialize database connection
 def init_database():
     try:
         engine = create_engine(DATABASE_URL)
         logger.info("Database connection established successfully")
         
-        # Create table if it doesn't exist
         with engine.connect() as connection:
             connection.execute(text("""
                 CREATE TABLE IF NOT EXISTS ada_prices (
@@ -350,18 +345,15 @@ def insert_prices_to_db(engine, price_data: Dict, current_time: datetime):
     """
     logger.info("Inserting price data into database...")
     
-    # Add ADA price explicitly if not already in the data
     if "ADA" not in price_data and "lovelace" in price_data:
         price_data["ADA"] = price_data["lovelace"]
     
     with engine.connect() as connection:
         try:
             for token, data in price_data.items():
-                # Skip entries with invalid prices
                 if data.get("latest_price_in_usd", 0) <= 0:
                     continue
                 
-                # Insert into database
                 query = text("""
                     INSERT INTO token_prices (open_time, symbol, price, volume)
                     VALUES (:open_time, :symbol, :price, :volume)
@@ -389,17 +381,13 @@ def main():
         logger.error("Error: Please set your Blockfrost API key in the script.")
         return
     
-    # Initialize database connection
     engine = init_database()
     
-    # Get current ADA price in USD
     ada_usd_price = get_ada_usd_price()
     logger.info(f"Current ADA/USD price from API: ${ada_usd_price:.4f}")
     
-    # Record current time for consistent timestamps
     current_time = datetime.now()
     
-    # Fetch and analyze transactions
     num_transactions = 50  
     transactions = get_minswap_transactions(num_transactions)
     
@@ -441,7 +429,6 @@ def main():
                     price_data[token_symbol]["latest_transaction"] = swap_info["transaction_hash"]
                     price_data[token_symbol]["latest_timestamp"] = swap_info["timestamp"]
     
-    # Add explicit entry for ADA
     price_data["ADA"] = {
         "token_id": "lovelace",
         "latest_price_in_ada": 1.0,
@@ -453,10 +440,8 @@ def main():
     
     stablecoin_rates = find_stablecoin_swaps(swap_results)
     
-    # Calculate USD prices
     price_data = calculate_usd_prices(price_data, ada_usd_price, stablecoin_rates)
     
-    # Insert prices into database
     insert_prices_to_db(engine, price_data, current_time)
     
     logger.info(f"Analysis complete. Found {len(swap_results)} swaps.")
